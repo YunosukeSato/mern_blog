@@ -4,6 +4,7 @@ import Header from "../components/Home/Header";
 import SearchBar from "../components/Home/SearchBar";
 
 import { blogList } from "../testData/data";
+import BlogList from "../components/Home/BlogList/BlogList";
 
 function Home() {
   const [blogs, setBlogs] = useState(blogList);
@@ -24,21 +25,15 @@ function Home() {
     setBlogs(filteredBlogs);
   };
 
-  // Clear search and show all blogs
-  const handleClearSearch = () => {
-    setBlogs(blogList);
-    setSearchKey("All");
-  };
-
   return (
     <>
       <Header />
       <SearchBar
         value={searchKey}
-        clearSearch={handleClearSearch}
         formSubmit={handleSearchBar}
-        handleSearchKey={(e) => setSearchKey(e.target.value)}
+        handleSearchKey={(e) => setSearchKey(e.target.text)}
       />
+      {!blogs.length ? <h1>Empty</h1> : <BlogList blogs={blogs} />}
     </>
   );
 }
