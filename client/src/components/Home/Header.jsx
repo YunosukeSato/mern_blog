@@ -32,7 +32,7 @@ function Header() {
               SIGN OUT
             </Link>
             <Link
-              to="/login"
+              to="/user-page"
               className="mr-5 font-medium hover:text-gray-900 no-underline"
             >
               USER
