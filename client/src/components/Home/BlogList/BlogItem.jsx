@@ -19,7 +19,7 @@ function BlogItem({
   return (
     <div className="flex flex-col">
       <img
-        className=" w-full h-64 object-cover rounded-3xl mb-2"
+        className=" w-full h-56 object-cover rounded-3xl mb-2"
         src={cover == "" ? image1 : cover}
         alt=""
       />

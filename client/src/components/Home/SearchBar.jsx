@@ -20,7 +20,6 @@ function SearchBar({ formSubmit, value, handleSearchKey }) {
         <form className="flex items-center" onSubmit={formSubmit}>
           <CDropdown>
             <CDropdownToggle color="secondary">{dropdownValue}</CDropdownToggle>
-            {/* <CDropdownToggle color="secondary">Dropdown menu</CDropdownToggle> */}
             <CDropdownMenu>
               <CDropdownItem onClick={handleSearchKey}>
                 Development
@@ -30,7 +29,7 @@ function SearchBar({ formSubmit, value, handleSearchKey }) {
               <CDropdownItem onClick={handleSearchKey}>All</CDropdownItem>
             </CDropdownMenu>
           </CDropdown>
-          <button className="outline-none border-none py-1 px-4 rounded-md bg-[#0f52ba] text-[#fff] ml-5">
+          <button className="outline-none border-none py-1 px-4 rounded-md bg-[#0080ff] hover:bg-[#0f52ba] text-[#fff] ml-5">
             Search
           </button>
         </form>
