@@ -31,11 +31,12 @@ function BlogItem({
       </p>
       <footer className="flex items-center mt-4 justify-between">
         <div className="flex items-center">
-          <img
+          {/* maybe add avatar later */}
+          {/* <img
             className=" w-10 h-10 rounded-full object-cover mr-2"
             src={authorAvatar == "" ? image2 : authorAvatar}
             alt=""
-          />
+          /> */}
           <div>
             <h6>{authorName}</h6>
             <p className=" text-xs text-[#a9a9a9] font-semibold">{createdAt}</p>
