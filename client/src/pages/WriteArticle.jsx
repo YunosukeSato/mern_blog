@@ -48,10 +48,7 @@ function WriteArticle() {
 
   const [title, setTitle] = useState("");
   const [code, setCode] = useState("Hello! Write a new article here!");
-  // const [theme, setTheme] = useState("");
   const [category, setCategory] = useState("");
-  // const [dropdownOpen, setDropdownOpen] = useState(false);
-  // const dropdownRef = useRef(null);
   // const navigate = useNavigate();
 
   const handleChangeCategory = (e) => {
@@ -62,6 +59,14 @@ function WriteArticle() {
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
+
+  const handleFileUpload = (e) => {
+    console.log(e.target.files[0]);
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append("image", file)
+    console.log(formData);
+  }
 
   const handleProcedureContentChange = (content) => {
     setCode(content);
@@ -146,6 +151,7 @@ function WriteArticle() {
           value={title}
           onChange={handleTitleChange}
         />
+        <input className="mt-4" type="file" onChange={handleFileUpload}/>
       </div>
       <div className="mx-10 text-gray-900">
         <ReactQuill
@@ -157,48 +163,6 @@ function WriteArticle() {
           // onChange={handleProcedureContentChange as ReactQuillProps["onChange"]}
         />
         <div className="mr-5 mt-5 flex justify-end">
-          {/* <div className="dropdown-end dropdown relative" ref={dropdownRef}>
-            <button
-              tabIndex={0}
-              className={`btn m-1 rounded bg-teal-500 px-4 py-2 text-xs font-bold text-white shadow outline-none transition-all duration-150 hover:bg-teal-600 hover:shadow-md focus:outline-none active:bg-teal-600 ${
-                dropdownOpen ? "active" : ""
-              }`}
-              onClick={toggleDropdown}
-            >
-              {theme ? theme : "Click"}
-            </button> */}
-          {/* {dropdownOpen && (
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu rounded-box w-52 bg-teal-500 px-4 py-2 text-xs font-bold uppercase text-white shadow outline-none transition-all duration-150  hover:shadow-md focus:outline-none active:bg-teal-600"
-              >
-                <li>
-                  <button
-                    onClick={handleSetTheme}
-                    className="hover:bg-teal-600"
-                  >
-                    Diary
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={handleSetTheme}
-                    className="hover:bg-teal-600"
-                  >
-                    Food
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={handleSetTheme}
-                    className="hover:bg-teal-600"
-                  >
-                    Travel
-                  </button>
-                </li>
-              </ul>
-            )} */}
-          {/* </div> */}
           <CDropdown>
             <CDropdownToggle color="secondary">
               {category == "" ? "Category" : category}
@@ -222,10 +186,8 @@ function WriteArticle() {
           >
             Submit
           </button>
-          {/* <button className="bg-[#0080ff] hover:bg-[#0f52ba] ease">Submit</button> */}
           <Link
             to="/"
-            // className="mx-5 flex items-center justify-end pt-1 text-teal-600 hover:text-teal-700"
             className={`mx-4 flex items-center text-[#0080ff] hover:text-[#0f52ba] `}
           >
             Home
