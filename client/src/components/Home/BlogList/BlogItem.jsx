@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import image1 from "../../../assets/ER_bg_1.jpg";
-import image2 from "../../../assets/ER_bg_2.jpeg";
+// import image2 from "../../../assets/ER_bg_2.jpeg";
 import Category from "../../common/Category";
 
 function BlogItem({
@@ -11,7 +11,7 @@ function BlogItem({
     description,
     createdAt,
     authorName,
-    authorAvatar,
+    // authorAvatar,
     cover,
     category,
   },
