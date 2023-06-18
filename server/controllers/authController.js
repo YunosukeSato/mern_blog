@@ -12,7 +12,7 @@ const generateToken = (username) => {
 
 const signup = async (req, res) => {
   const { username, password, profilePic } = req.body;
-  const userid = await uuidv4();
+  const userid = uuidv4();
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(password, salt);
   const user = await User.create({
@@ -55,9 +55,15 @@ const user = async (req, res) => {
     return res.status(404).json({ message: "user doesn't exist" });
   }
 
-  return res.status(200).json({ message: user });
+  return res.status(200).json({ message: user, user });
+};
+
+const revokeToken = async (req, res) => {
+  res.clearCookie("token");
+  return res.status(200).json({ message: "cookie successfully cleared" });
 };
 
 exports.signup = signup;
 exports.login = login;
 exports.user = user;
+exports.revokeToken = revokeToken;
