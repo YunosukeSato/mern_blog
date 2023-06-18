@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 import { useAuthContext } from "../context/AuthContext";
 
@@ -71,6 +72,12 @@ function SignUp() {
           >
             Sign Up
           </button>
+          <Link
+            to="/"
+            className={`justify-center mt-2 flex items-center text-[#0080ff] hover:text-[#0f52ba] `}
+          >
+            Home
+          </Link>
         </form>
       </div>
     </div>
