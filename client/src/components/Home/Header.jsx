@@ -1,9 +1,7 @@
-import { useState } from "react";
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 
-function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-
+function Header({ isLoggedIn, handleSignOut }) {
   return (
     <>
       <div className="pr-8 inline-flex justify-end h-full items-center lg:ml-0 w-full lg:justify-end">
@@ -11,12 +9,12 @@ function Header() {
           <>
             <Link
               to="/login"
-              className="mr-5 font-medium hover:text-gray-900 no-underline"
+              className="mr-5 font-medium text-[#0080ff] hover:text-[#0f52ba] no-underline"
             >
-              LOGIN
+              Login
             </Link>
             <Link
-              to="/sign-up"
+              to="/signup"
               className="ease rounded bg-[#0080ff] no-underline px-4 py-2 text-xs font-bold uppercase text-white shadow outline-none transition-all duration-150 hover:bg-[#0f52ba] focus:outline-none active:bg-[#0f52ba]"
             >
               SIGN UP
@@ -25,20 +23,20 @@ function Header() {
         )}
         {isLoggedIn && (
           <>
-            <Link
-              to="/login"
-              className="mr-5 font-medium hover:text-gray-900 no-underline"
+            <button
+              onClick={handleSignOut}
+              className="mr-5 font-medium text-[#0080ff] hover:text-[#0f52ba] no-underline"
             >
-              SIGN OUT
+              Sign out
+            </button>
+            <Link
+              to="/user_page"
+              className="mr-5 text-[#0080ff] font-medium hover:text-[#0f52ba] no-underline"
+            >
+              User
             </Link>
             <Link
-              to="/user-page"
-              className="mr-5 font-medium hover:text-gray-900 no-underline"
-            >
-              USER
-            </Link>
-            <Link
-              to="/new-article"
+              to="/new_article"
               className="ease rounded bg-[#0080ff] no-underline px-4 py-2 text-xs font-bold uppercase text-white shadow outline-none transition-all duration-150 hover:bg-[#0f52ba] focus:outline-none active:bg-[#0f52ba]"
             >
               New Article
