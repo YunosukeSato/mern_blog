@@ -2,9 +2,10 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const authRoutes = require("./routes/authRoutes");
-const cookieParser = require("cookie-parser");
+const articleRoutes = require("./routes/articleRoutes");
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use(
   })
 );
 app.use("/auth", authRoutes);
+app.use("/article", articleRoutes);
 
 const port = process.env.PORT || 8080;
 
