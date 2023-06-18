@@ -40,7 +40,7 @@ const Blog = () => {
             </div>
           </header>
           <img
-            className="w-full"
+            className="w-full rounded-lg"
             src={blog.cover == "" ? defaultCover : blog.cover}
             alt="cover"
           />
