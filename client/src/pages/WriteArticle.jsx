@@ -1,16 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
-// import ReactQuill, { ReactQuillProps } from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { Link } from "react-router-dom";
-// import axios from "axios";
-// import { key } from "../key"
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../utils/axios";
 import {
   CDropdown,
   CDropdownToggle,
   CDropdownMenu,
   CDropdownItem,
 } from "@coreui/react";
+import { useAuthContext } from "../context/AuthContext";
 
 function WriteArticle() {
   const modules = {
@@ -21,7 +20,6 @@ function WriteArticle() {
       [{ font: [] }],
       [{ align: ["right", "center", "justify"] }],
       [{ list: "ordered" }, { list: "bullet" }],
-      // ["link", "image"],
       ["link"],
       [{ color: ["red", "#785412"] }],
       [{ background: ["red", "#785412"] }],
@@ -47,96 +45,80 @@ function WriteArticle() {
   ];
 
   const [title, setTitle] = useState("");
-  const [code, setCode] = useState("Hello! Write a new article here!");
+  // const [cover, setCover] = useState();
+  const [body, setBody] = useState("Hello! Write a new article here!");
   const [category, setCategory] = useState("");
-  // const navigate = useNavigate();
+  const user = useAuthContext();
+  const navigate = useNavigate();
 
-  const handleChangeCategory = (e) => {
-    setCategory(e.target.text);
-    // console.log(e.target.text);
-  };
+  useEffect(() => {
+    if (user.user == undefined) {
+      navigate("/");
+    }
+  });
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
 
-  const handleFileUpload = (e) => {
-    console.log(e.target.files[0]);
-    const file = e.target.files[0]
-    const formData = new FormData()
-    formData.append("image", file)
-    console.log(formData);
-  }
-
-  const handleProcedureContentChange = (content) => {
-    setCode(content);
+  const handleChangeCategory = (e) => {
+    setCategory(e.target.text);
   };
 
-  // const handleSetTheme = (e) => {
-  //   e.preventDefault();
-  //   const selectedTheme = e.currentTarget.textContent;
-  //   if (selectedTheme) {
-  //     setTheme(selectedTheme);
-  //   }
-  //   setDropdownOpen(false);
+  // const handleFileUpload = (e) => {
+  //   // console.log(e.target.files[0]);
+  //   const file = e.target.files[0];
+  //   // console.log(formData);
+  //   setCover(file);
   // };
 
-  // const toggleDropdown = () => {
-  //   setDropdownOpen((prevState) => !prevState);
-  // };
+  const handleProcedureContentChange = (content) => {
+    setBody(content);
+  };
 
-  // const handleOutsideClick = (e) => {
-  //   if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-  //     setDropdownOpen(false);
-  //   }
-  // };
+  const handleSubmit = async () => {
+    
+    // const formData = new FormData();
+    // formData.append("userid", userid);
+    // formData.append("author", author);
+    // formData.append("title", title);
+    // formData.append("image", cover);
+    // formData.append("body", body);
+    // formData.append("category", category);
+    
+    const userid = user.user.userid;
+    const author = user.user.username;
+    // if (author && title && cover && body && category) {
+    if (author && title && body && category) {
+      try {
+        console.log("sending a request");
+        const response = await axios.post(
+          "/article/save",
+          {
+            userid,
+            author,
+            title,
+            // cover,
+            body,
+            category,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              // Authorization: `Bearer ${key}`,
+            },
+          }
+        );
 
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleOutsideClick);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleOutsideClick);
-  //   };
-  // }, []);
-
-  // const getCookie = (param) => {
-  //   const cookies = document.cookie.split("; ");
-  //   const cookieString = cookies.find((cookie) =>
-  //     cookie.startsWith(`${param}=`)
-  //   );
-  //   return cookieString?.replace(`${param}=`, "");
-  // };
-
-  // const handleSubmit = async () => {
-  //   const author = getCookie("username");
-
-  //   if (author && title && code && theme) {
-  //     try {
-  //       const response = await axios.post(
-  //         "https://node-blog-api.herokuapp.com/articles/save",
-  //         {
-  //           author,
-  //           title,
-  //           code,
-  //           theme,
-  //         },
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Authorization: `Bearer ${key}`,
-  //           }
-  //         }
-  //       );
-
-  //       if (response.status === 200) {
-  //         return navigate("/");
-  //       }
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-
-  //     console.error("Something went wrong");
-  //   }
-  // };
+        if (response.status === 201) {
+          return navigate("/");
+        }
+      } catch (err) {
+        return console.log(err);
+      }
+    }
+    console.error("Something went wrong");
+  };
 
   return (
     <>
@@ -151,14 +133,15 @@ function WriteArticle() {
           value={title}
           onChange={handleTitleChange}
         />
-        <input className="mt-4" type="file" onChange={handleFileUpload}/>
+        {/* implement image upload later */}
+        {/* <input className="mt-4" type="file" onChange={handleFileUpload} /> */}
       </div>
       <div className="mx-10 text-gray-900">
         <ReactQuill
           theme="snow"
           modules={modules}
           formats={formats}
-          value={code}
+          value={body}
           onChange={handleProcedureContentChange}
           // onChange={handleProcedureContentChange as ReactQuillProps["onChange"]}
         />
@@ -168,21 +151,24 @@ function WriteArticle() {
               {category == "" ? "Category" : category}
             </CDropdownToggle>
             <CDropdownMenu>
-              <CDropdownItem onClick={handleChangeCategory}>
-                Development
-              </CDropdownItem>
+              <CDropdownItem onClick={handleChangeCategory}>Game</CDropdownItem>
               <CDropdownItem onClick={handleChangeCategory}>
                 Shoping
               </CDropdownItem>
               <CDropdownItem onClick={handleChangeCategory}>
                 Travel
               </CDropdownItem>
+              <CDropdownItem onClick={handleChangeCategory}>
+                Development
+              </CDropdownItem>
             </CDropdownMenu>
           </CDropdown>
           <button
-            className={"ease m-1 rounded px-4 py-2 text-xs font-bold uppercase text-white shadow outline-none transition-all duration-150 hover:shadow-md focus:outline bg-[#0080ff] hover:bg-[#0f52ba] disabled:bg-gray-300 disabled:cursor-not-allowed"}
-            // onClick={handleSubmit}
-            disabled={title == "" || code == "" || category == ""}
+            className={
+              "ease m-1 rounded px-4 py-2 text-xs font-bold uppercase text-white shadow outline-none transition-all duration-150 hover:shadow-md focus:outline bg-[#0080ff] hover:bg-[#0f52ba] disabled:bg-gray-300 disabled:cursor-not-allowed"
+            }
+            onClick={handleSubmit}
+            disabled={title == "" || body == "" || category == ""}
           >
             Submit
           </button>
