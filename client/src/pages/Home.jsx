@@ -6,14 +6,21 @@ import axios from "../utils/axios";
 
 import { blogList } from "../testData/data";
 import BlogList from "../components/Home/BlogList/BlogList";
-import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [blogs, setBlogs] = useState(blogList);
   const [searchKey, setSearchKey] = useState("All");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate()
 
+  const getArticle = async () => {
+    try {
+      const response = await axios.get("/article/get/all");
+
+      setBlogs(response.data.articles);
+    } catch (error) {
+      return console.log(error);
+    }
+  };
   useEffect(() => {
     const checkStatus = async () => {
       try {
@@ -26,12 +33,14 @@ function Home() {
     };
 
     checkStatus();
-  });
+
+    getArticle();
+  }, [isLoggedIn]);
 
   const handleSignOut = async () => {
     try {
       await axios.delete("/auth/revoke_token");
-      navigate("/");
+      setIsLoggedIn(false)
     } catch (error) {
       console.log(error.message);
     }
@@ -45,11 +54,25 @@ function Home() {
 
   // Search for blog by category
   const handleSearchResults = () => {
-    const allBlogs = blogList;
-    const filteredBlogs = allBlogs.filter((blog) =>
-      blog.category.toLowerCase().includes(searchKey.toLowerCase().trim())
-    );
-    setBlogs(filteredBlogs);
+    const category = searchKey.trim();
+
+    if (category == "All") {
+      return getArticle();
+    }
+
+    const getArticleByCategory = async () => {
+      try {
+        const response = await axios.get("/article/get/category", {
+          params: { category },
+        });
+
+        setBlogs(response.data.articles);
+      } catch (error) {
+        return console.log(error);
+      }
+    };
+
+    getArticleByCategory();
   };
 
   return (

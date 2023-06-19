@@ -26,6 +26,7 @@ function SearchBar({ formSubmit, value, handleSearchKey }) {
               </CDropdownItem>
               <CDropdownItem onClick={handleSearchKey}>Shoping</CDropdownItem>
               <CDropdownItem onClick={handleSearchKey}>Travel</CDropdownItem>
+              <CDropdownItem onClick={handleSearchKey}>Game</CDropdownItem>
               <CDropdownItem onClick={handleSearchKey}>All</CDropdownItem>
             </CDropdownMenu>
           </CDropdown>

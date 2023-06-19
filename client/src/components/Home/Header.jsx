@@ -1,7 +1,35 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import Modal from "react-modal";
+import { useState } from "react";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+// import { Link } from "react-router-dom";
 
 function Header({ isLoggedIn, handleSignOut }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleSignOutClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSignOutConfirm = async () => {
+    await handleSignOut();
+    setIsModalOpen(false);
+  };
   return (
     <>
       <div className="pr-8 inline-flex justify-end h-full items-center lg:ml-0 w-full lg:justify-end">
@@ -24,7 +52,8 @@ function Header({ isLoggedIn, handleSignOut }) {
         {isLoggedIn && (
           <>
             <button
-              onClick={handleSignOut}
+              onClick={handleSignOutClick}
+              // onClick={handleSignOut}
               className="mr-5 font-medium text-[#0080ff] hover:text-[#0f52ba] no-underline"
             >
               Sign out
@@ -55,6 +84,28 @@ function Header({ isLoggedIn, handleSignOut }) {
           productive and entertained!
         </p>
       </header>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={handleModalClose}
+        style={customStyles}
+        contentLabel="Sign Out Confirmation"
+      >
+        <h3>Are you sure you want to sign out?</h3>
+        <div className="flex justify-evenly">
+          <button
+            className="ease rounded bg-[#0080ff] no-underline px-4 py-2 text-xs font-bold uppercase text-white shadow outline-none transition-all duration-150 hover:bg-[#0f52ba] focus:outline-none active:bg-[#0f52ba]"
+            onClick={handleSignOutConfirm}
+          >
+            Confirm
+          </button>
+          <button
+            className="text-[#0080ff] font-medium hover:text-[#0f52ba]"
+            onClick={handleModalClose}
+          >
+            Cancel
+          </button>
+        </div>
+      </Modal>
     </>
   );
 }
