@@ -18,10 +18,10 @@ const ArticleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  cover: {
-    type: Buffer,
-    required: true,
-  },
+  // cover: {
+  //   type: Buffer,
+  //   required: true,
+  // },
   body: {
     type: String,
     required: true,
@@ -35,3 +35,5 @@ const ArticleSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+module.exports = mongoose.model("Article", ArticleSchema);

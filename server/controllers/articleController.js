@@ -1,21 +1,25 @@
 const { v4: uuidv4 } = require("uuid");
+const multer = require("multer");
 
 const Article = require("../models/Article");
-const { create } = require("../models/User");
 
 const createArticle = async (req, res) => {
-  const { userid, author, title, cover, body, category, created_at } = req.body;
+  const { userid, author, title, body, category } = req.body;
   const id = uuidv4();
+  const created_at = new Date();
+  const dayAndYear = created_at.toDateString().slice(4);
+  // implement image upload later
+  // const cover = req.file.buffer;
 
   const article = await Article.create({
     id,
     userid,
     author,
     title,
-    cover,
+    // cover,
     body,
     category,
-    created_at,
+    created_at: dayAndYear,
   });
 
   return res
@@ -52,7 +56,7 @@ const getAllArticles = async (req, res) => {
 };
 
 const getArticlesByCategory = async (req, res) => {
-  const { category } = req.body;
+  const { category } = req.query;
   const articles = await Article.find({ category });
 
   if (!articles) {
@@ -62,8 +66,19 @@ const getArticlesByCategory = async (req, res) => {
   return res.status(200).json({ articles });
 };
 
+const getArticleById = async (req, res) => {
+  const { id } = req.query;
+  const article = await Article.find({ id });
+
+  if (!article) {
+    return res.status(404).json({ message: "Article not found" });
+  }
+
+  return res.status(200).json({ article });
+};
+
 const getArticlesByAuthor = async (req, res) => {
-  const { userid } = req.body;
+  const { userid } = req.query;
   const articles = await Article.find({ userid });
 
   if (!articles) {
@@ -91,4 +106,5 @@ exports.editArticle = editArticle;
 exports.getAllArticles = getAllArticles;
 exports.getArticlesByCategory = getArticlesByCategory;
 exports.getArticlesByAuthor = getArticlesByAuthor;
+exports.getArticleById = getArticleById;
 exports.deleteArticle = deleteArticle;
