@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import image1 from "../../../assets/ER_bg_1.jpg";
-// import image2 from "../../../assets/ER_bg_2.jpeg";
+import image2 from "../../../assets/ER_bg_2.jpeg";
 import Category from "../../common/Category";
 import DOMPurify from "dompurify";
 
@@ -46,6 +46,11 @@ function BlogItem({
       <footer className="flex items-center mt-4 justify-between">
         <div className="flex items-center">
           {/* maybe add avatar later */}
+          <img
+            className=" w-10 h-10 rounded-full object-cover mr-2"
+            src={image2}
+            alt=""
+          />
           {/* <img
             className=" w-10 h-10 rounded-full object-cover mr-2"
             src={authorAvatar == "" ? image2 : authorAvatar}

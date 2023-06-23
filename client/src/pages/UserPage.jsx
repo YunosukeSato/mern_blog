@@ -16,8 +16,8 @@ function UserPage() {
         params: { userid },
       });
 
-      if (response.data.articles == []) {
-        return console.log("Article not found");
+      if (response.data.articles.length == 0) {
+        return setArticles([]);
       }
 
       return setArticles(response.data.articles);
@@ -36,12 +36,12 @@ function UserPage() {
           Home
         </Link>
       </div>
-      {!articles ? (
-        <div className="flex items-center justify-center">
-          Articles not found
-        </div>
+      {articles.length == 0 ? (
+        <h2 className="flex items-center justify-center">Articles not found</h2>
       ) : (
-        <BlogList blogs={articles} />
+        <>
+          <BlogList blogs={articles} />
+        </>
       )}
     </>
   );
