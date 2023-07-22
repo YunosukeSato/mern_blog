@@ -4,11 +4,10 @@ import Header from "../components/Home/Header";
 import SearchBar from "../components/Home/SearchBar";
 import axios from "../utils/axios";
 
-import { blogList } from "../testData/data";
 import BlogList from "../components/Home/BlogList/BlogList";
 
 function Home() {
-  const [blogs, setBlogs] = useState(blogList);
+  const [blogs, setBlogs] = useState(null);
   const [searchKey, setSearchKey] = useState("All");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -83,7 +82,7 @@ function Home() {
         formSubmit={handleSearchBar}
         handleSearchKey={(e) => setSearchKey(e.target.text)}
       />
-      {!blogs.length ? <h1>Empty</h1> : <BlogList blogs={blogs} />}
+      {!blogs ? <h1>Empty</h1> : <BlogList blogs={blogs} />}
     </>
   );
 }
