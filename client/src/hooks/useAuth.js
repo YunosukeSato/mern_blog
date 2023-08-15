@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "../utils/axios";
 
+// Context for the authentication
 function useAuth() {
   const [user, setUser] = useState();
   const navigate = useNavigate();
 
+  // Sign up function which return user info and redirect to the main page
   const signup = async (data) => {
     try {
       await axios.post("/auth/signup", data);
@@ -18,6 +20,7 @@ function useAuth() {
     }
   };
 
+  // Log in function which return user info and redirect to the main page
   const login = async (data) => {
     try {
       await axios.post("/auth/login", data);
@@ -28,6 +31,7 @@ function useAuth() {
     }
   };
 
+  // Function to simply get the user info
   const getUser = async () => {
     try {
       const response = await axios.get("/auth/user");
