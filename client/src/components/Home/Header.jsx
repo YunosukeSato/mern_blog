@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import { useState } from "react";
 
+// Custom styles for the modal
 const customStyles = {
   content: {
     top: "50%",
@@ -13,9 +14,9 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
   },
 };
-// import { Link } from "react-router-dom";
 
 function Header({ isLoggedIn, handleSignOut }) {
+  // State for modal window
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSignOutClick = () => {
@@ -30,6 +31,7 @@ function Header({ isLoggedIn, handleSignOut }) {
     await handleSignOut();
     setIsModalOpen(false);
   };
+  
   return (
     <>
       <div className="pr-8 inline-flex justify-end h-full items-center lg:ml-0 w-full lg:justify-end">
@@ -53,7 +55,6 @@ function Header({ isLoggedIn, handleSignOut }) {
           <>
             <button
               onClick={handleSignOutClick}
-              // onClick={handleSignOut}
               className="mr-5 font-medium text-[#0080ff] hover:text-[#0f52ba] no-underline"
             >
               Sign out

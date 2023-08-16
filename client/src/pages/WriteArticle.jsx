@@ -12,6 +12,7 @@ import {
 import { useAuthContext } from "../context/AuthContext";
 
 function WriteArticle() {
+  // Modules which the user can use in the WriteArticle page
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -77,17 +78,9 @@ function WriteArticle() {
   };
 
   const handleSubmit = async () => {
-    
-    // const formData = new FormData();
-    // formData.append("userid", userid);
-    // formData.append("author", author);
-    // formData.append("title", title);
-    // formData.append("image", cover);
-    // formData.append("body", body);
-    // formData.append("category", category);
-    
     const userid = user.user.userid;
     const author = user.user.username;
+    // Todo: Enable to set the cover image
     // if (author && title && cover && body && category) {
     if (author && title && body && category) {
       try {

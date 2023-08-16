@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 
 function Login() {
+  // Stores the username and password that the user typed
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
   const [error, setError] = useState(false);
+  // login method from the context
   const { login } = useAuthContext();
 
   const handleSubmit = async (e) => {

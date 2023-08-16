@@ -7,6 +7,8 @@ import {
 } from "@coreui/react";
 
 function SearchBar({ formSubmit, value, handleSearchKey }) {
+
+  // The value which category is selected by the user
   let dropdownValue = "";
   if (value == "All") {
     dropdownValue = "Category";

@@ -7,6 +7,7 @@ import { useAuthContext } from "../context/AuthContext";
 
 function UserPage() {
   const [articles, setArticles] = useState([]);
+  // The user information from the context
   const user = useAuthContext();
 
   useEffect(() => {

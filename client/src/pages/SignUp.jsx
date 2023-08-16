@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 
 function SignUp() {
+    // Stores the username and password that the user typed
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
   const [error, setError] = useState(false);
+    // signup method from the context
   const { signup } = useAuthContext();
 
   const handleSubmit = async (e) => {

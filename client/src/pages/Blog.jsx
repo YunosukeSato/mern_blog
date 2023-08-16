@@ -8,13 +8,16 @@ import DOMPurify from "dompurify";
 import axios from "../utils/axios";
 import defaultCover from "../assets/ER_bg_1.jpg";
 
+// Function to turn the HTML into the content without tags
 function sanitizeHTML(html) {
   const sanitizedHTML = DOMPurify.sanitize(html);
   return { __html: sanitizedHTML };
 }
 
 const Blog = () => {
+  // Storing article id
   const { id } = useParams();
+  // Blog information from the db
   const [blog, setBlog] = useState(null);
 
   useEffect(() => {

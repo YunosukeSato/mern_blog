@@ -8,6 +8,7 @@ import BlogList from "../components/Home/BlogList/BlogList";
 
 function Home() {
   const [blogs, setBlogs] = useState(null);
+  // Stores the category which the user selected
   const [searchKey, setSearchKey] = useState("All");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
